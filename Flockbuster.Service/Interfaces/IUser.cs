@@ -9,6 +9,6 @@ namespace Flockbuster.Service.Interfaces
 {
     public interface IUser
     {
-        List<Users>
+        List<Users> GetUsers();
     }
 }
