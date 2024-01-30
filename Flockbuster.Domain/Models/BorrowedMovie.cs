@@ -9,8 +9,8 @@ namespace Flockbuster.Domain.Models
     public class BorrowedMovie
     {
         public int Id { get; set; }
-        public Movie MovieID { get; set; }
-        public User UserID { get; set; }
+        public Movies MovieID { get; set; }
+        public Users UserID { get; set; }
         public bool IsBorrowed { get; set; }
         public bool WasBorrowed { get; set; }
     }
