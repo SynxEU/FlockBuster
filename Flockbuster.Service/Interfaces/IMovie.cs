@@ -10,5 +10,7 @@ namespace Flockbuster.Service.Interfaces
     public interface IMovie
     {
         List<Movies> GetMovies();
+        List<BorrowedMovie> GetBorrowedMovies();
+        List<Genre> GetGenres();
     }
 }

@@ -58,5 +58,63 @@ namespace Flockbuster.Domain
             }
             return listUser;
         }
+        public List<BorrowedMovie> GetBorrowedMovies()
+        {
+            List<BorrowedMovie> listBorrowedMovies = new List<BorrowedMovie>();
+            using (SqlConnection con = new(connectionString))
+            { 
+                con.Open();
+                SqlCommand cmd = new("GetAllBorrowedMovies", con) { CommandType= CommandType.StoredProcedure };
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    listBorrowedMovies.Add(new BorrowedMovie
+                    { 
+                        Id = reader.GetInt32("ID"),
+                        MovieID = reader.GetInt32("Movie ID"),
+                        UserID = reader.GetInt32("User ID"),
+                        IsBorrowed = reader.GetBoolean("IsBorrowed"),
+                        WasBorrowed = reader.GetBoolean("WasBorrowed")
+                    });
+                }
+            }
+            return listBorrowedMovies;
+        }
+        public List<Genre> GetGenres() 
+        { 
+            List<Genre> listGenres = new List<Genre>();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new("GetAllGenres", con) { CommandType = CommandType.StoredProcedure };
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    listGenres.Add(new Genre
+                    {
+                        Id = reader.GetInt32("ID"),
+                        GenreName = reader.GetString("Genre")
+                    });
+                }
+            }
+            return listGenres;
+        }
+        public Users GetUserByMail(string mail)
+        {
+            Users user = new Users();
+            using (SqlConnection con = new(connectionString))
+            { 
+                con.Open();
+                SqlCommand cmd = new SqlCommand("GetUserByMail", con) { CommandType= CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@Mail", mail);
+                cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                { 
+                    user.Id = reader.GetInt32("ID");
+                }
+            }
+            return user;
+        }
     }
 }

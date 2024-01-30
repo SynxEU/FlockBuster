@@ -17,5 +17,7 @@ namespace Flockbuster.Service.Methods
         public Movie(IConfiguration configuration) { _connection = new SQLConn(configuration); }
 
         public List<Movies> GetMovies() => _connection.GetMovies();
+        public List<BorrowedMovie> GetBorrowedMovies() => _connection.GetBorrowedMovies();
+        public List<Genre> GetGenres() => _connection.GetGenres();
     }
 }
