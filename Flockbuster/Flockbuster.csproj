@@ -10,4 +10,9 @@
     <ProjectReference Include="..\Flockbuster.Service\Flockbuster.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Admin\" />
+    <Folder Include="Pages\User\" />
+  </ItemGroup>
+
 </Project>

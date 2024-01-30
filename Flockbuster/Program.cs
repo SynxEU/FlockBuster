@@ -1,3 +1,7 @@
+using Flockbuster.Service;
+using Flockbuster.Service.Interfaces;
+using Flockbuster.Service.Methods;
+
 namespace Flockbuster
 {
     public class Program
@@ -8,6 +12,9 @@ namespace Flockbuster
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddSession();
+            builder.Services.AddSingleton<IUser, User>();
+            builder.Services.AddSingleton<IMovie, Movie>();
 
             var app = builder.Build();
 
