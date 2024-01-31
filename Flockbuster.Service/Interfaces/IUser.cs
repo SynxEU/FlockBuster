@@ -12,7 +12,10 @@ namespace Flockbuster.Service.Interfaces
         List<Users> GetUsers();
         Users GetUsersById(int id);
         Users GetUserByMail(string mail);
-        Users GetUserIdLogin(string mail, string password);
+        Users GetUserDetailsLogin(string mail, string password);
         Users CreateUser(string name, int age, string mail, string password);
+        void DeleteUser(int id);
+        Users UpdateUser(int id, string name, int age, string mail);
+        Users UpdateUserPassword(int id, string password);
     }
 }

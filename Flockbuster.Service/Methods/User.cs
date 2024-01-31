@@ -19,7 +19,10 @@ namespace Flockbuster.Service.Methods
         public List<Users> GetUsers() => _connection.GetUsers();
         public Users GetUserByMail(string mail) => _connection.GetUserByMail(mail);
         public Users GetUsersById(int id) => _connection.GetUsersById(id);
-        public Users GetUserIdLogin(string mail, string password) => _connection.GetUserIdLogin(mail, password);
+        public Users GetUserDetailsLogin(string mail, string password) => _connection.GetUserDetailsLogin(mail, password);
         public Users CreateUser(string name, int age, string mail, string password) => _connection.CreateUser(name, age, mail, password);
+        public void DeleteUser(int id) => _connection?.DeleteUser(id);
+        public Users UpdateUserPassword(int id, string password) => _connection.UpdateUserPassword(id, password);
+        public Users UpdateUser(int id, string name, int age, string mail) => _connection.UpdateUser(id, name, age, mail);
     }
 }

@@ -24,5 +24,7 @@ namespace Flockbuster.Service.Methods
         public BorrowedMovie GetBorrowedMovieById(int id) => _connection.GetBorrowedMovieById(id);
         public List<Genre> GetMovieGenre(int id) => _connection.GetMovieGenre(id);
         public Movies CreateMovie(string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price, int genreId) => _connection.CreateMovie(title, ageRating, hour, minutes, releaseDate, price, genreId);
+        public void DeleteMovie(int id) => _connection?.DeleteMovie(id);
+        public Movies UpdateMovie(int id, string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price) => _connection.UpdateMovie(id, title, ageRating, hour, minutes, releaseDate, price);
     }
 }

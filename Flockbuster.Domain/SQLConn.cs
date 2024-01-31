@@ -220,7 +220,7 @@ namespace Flockbuster.Domain
                 return listGenres;
             }
         }
-        public Users GetUserIdLogin(string mail, string password)
+        public Users GetUserDetailsLogin(string mail, string password)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -234,6 +234,7 @@ namespace Flockbuster.Domain
                 while (reader.Read())
                 {
                     user.Id = reader.GetInt32("ID");
+                    user.Name = reader.GetString("Name");
                 }
                 return user;
             }
@@ -282,6 +283,82 @@ namespace Flockbuster.Domain
                 movie.Price = price;
             }
             return movie;
+        }
+        public Users UpdateUser(int id, string name, int age, string mail) 
+        {
+            Users user = new Users();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UpdateUser", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserID", id);
+                cmd.Parameters.AddWithValue("@Name", name);
+                cmd.Parameters.AddWithValue("@Age", age);
+                cmd.Parameters.AddWithValue("@Mail", mail);
+                cmd.ExecuteNonQuery();
+                user.Name = name;
+                user.Age = age;
+                user.Email = mail;
+            }
+            return user;
+        }
+        public Users UpdateUserPassword(int id, string password) 
+        {
+            Users user = new Users();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UpdateUserPassword", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserID", id);
+                cmd.Parameters.AddWithValue("@Password", password);
+                cmd.ExecuteNonQuery();
+                user.Password = password;
+            }
+            return user;
+        }
+        public Movies UpdateMovie(int id, string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price)
+        {
+            int seconds = ((hour * 60) + minutes) * 60;
+
+            Movies movie = new Movies();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UpdateMovie", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@MovieID", id);
+                cmd.Parameters.AddWithValue("@Title", title);
+                cmd.Parameters.AddWithValue("@AgeRating", ageRating);
+                cmd.Parameters.AddWithValue("@TTW", seconds);
+                cmd.Parameters.AddWithValue("@ReleaseDate", releaseDate.ToShortDateString());
+                cmd.Parameters.AddWithValue("@Price", price);
+                cmd.ExecuteNonQuery();
+                movie.Title = title;
+                movie.RequiredAge = ageRating;
+                movie.TTW = seconds;
+                movie.RelaseDate = releaseDate.ToShortDateString();
+                movie.Price = price;
+            }
+            return movie;
+        }
+        public void DeleteMovie(int id)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("DeleteMovie", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@MovieID", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void DeleteUser(int id)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("DeleteUser", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserID", id);
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }
