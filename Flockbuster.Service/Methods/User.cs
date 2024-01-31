@@ -14,8 +14,12 @@ namespace Flockbuster.Service.Methods
     {
         SQLConn _connection;
 
-        public User(IConfiguration configuration) { _connection = new SQLConn(configuration); }
+        public User(IConfiguration configuration) => _connection = new SQLConn(configuration);
 
         public List<Users> GetUsers() => _connection.GetUsers();
+        public Users GetUserByMail(string mail) => _connection.GetUserByMail(mail);
+        public Users GetUsersById(int id) => _connection.GetUsersById(id);
+        public Users GetUserIdLogin(string mail, string password) => _connection.GetUserIdLogin(mail, password);
+        public Users CreateUser(string name, int age, string mail, string password) => _connection.CreateUser(name, age, mail, password);
     }
 }

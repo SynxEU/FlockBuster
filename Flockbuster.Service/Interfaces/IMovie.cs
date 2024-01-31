@@ -12,5 +12,10 @@ namespace Flockbuster.Service.Interfaces
         List<Movies> GetMovies();
         List<BorrowedMovie> GetBorrowedMovies();
         List<Genre> GetGenres();
+        Genre GetGenreById(int id);
+        Movies GetMoviesById(int id);
+        BorrowedMovie GetBorrowedMovieById(int id);
+        List<Genre> GetMovieGenre(int id);
+        Movies CreateMovie(string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price, int genreId);
     }
 }

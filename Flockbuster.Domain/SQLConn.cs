@@ -1,4 +1,5 @@
-﻿using Flockbuster.Domain.Models;
+﻿using Azure;
+using Flockbuster.Domain.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
@@ -9,7 +10,7 @@ namespace Flockbuster.Domain
     public class SQLConn
     {
         private readonly string connectionString;
-        public SQLConn(IConfiguration configuration) { connectionString = configuration.GetConnectionString("Default"); }
+        public SQLConn(IConfiguration configuration) => connectionString = configuration.GetConnectionString("Default");
 
         public List<Movies> GetMovies()
         {
@@ -26,7 +27,7 @@ namespace Flockbuster.Domain
                         Id = reader.GetInt32("ID"),
                         Title = reader.GetString("Title"),
                         RequiredAge = reader.GetInt32("Age Rating"),
-                        TTW = reader.GetInt64("TTW"),
+                        TTW = reader.GetInt32("TTW"),
                         RelaseDate = reader.GetString("Release Date"),
                         Price = reader.GetInt32("Price")
                     });
@@ -115,6 +116,172 @@ namespace Flockbuster.Domain
                 }
             }
             return user;
+        }
+        public Genre GetGenreById(int id)
+        {
+            Genre genre = new Genre();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("GetGenreById", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@GenreId", id);
+                cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    genre.GenreName = reader.GetString("Genre");
+                }
+            }
+            return genre;
+        }
+        public Movies GetMoviesById(int id)
+        {
+            Movies movie = new Movies();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("GetMovieById", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@MovieId", id);
+                cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    movie.Id = reader.GetInt32("ID");
+                    movie.Title = reader.GetString("Title");
+                    movie.RequiredAge = reader.GetInt32("Age Rating");
+                    movie.TTW = reader.GetInt32("TTW");
+                    movie.RelaseDate = reader.GetString("Release Date");
+                    movie.Price = reader.GetInt32("Price");
+                }
+            }
+            return movie;
+        }
+        public Users GetUsersById(int id)
+        {
+            Users user = new Users();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("GetUserById", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserId", id);
+                cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    user.Id = reader.GetInt32("ID");
+                    user.Name = reader.GetString("Name");
+                    user.Age = reader.GetInt32("Age");
+                    user.Email = reader.GetString("E-Mail");
+                    user.Balance = reader.GetInt32("Balance");
+                    user.IsAdmin = reader.GetBoolean("Admin");
+                }
+            }
+            return user;
+        }
+        public BorrowedMovie GetBorrowedMovieById(int id)
+        {
+            BorrowedMovie borrowedMovie = new BorrowedMovie();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("GetBorrowedMoviesById", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserId", id);
+                cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    borrowedMovie.Id = reader.GetInt32("ID");
+                    borrowedMovie.UserID = reader.GetInt32("User ID");
+                    borrowedMovie.MovieID = reader.GetInt32("Movie ID");
+                    borrowedMovie.IsBorrowed = reader.GetBoolean("IsBorrowed");
+                    borrowedMovie.WasBorrowed = reader.GetBoolean("WasBorrowed");
+                }
+            }
+            return borrowedMovie;
+        }
+        public List<Genre> GetMovieGenre(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                List<Genre> listGenres = new List<Genre>();
+                conn.Open();
+                SqlCommand com = new SqlCommand("GetMovieGenre", conn) { CommandType = CommandType.StoredProcedure };
+                com.Parameters.AddWithValue("@Movie_ID", id);
+                com.ExecuteNonQuery();
+
+                SqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    listGenres.Add(new Genre
+                    {
+                        GenreName = reader.GetString("Genre"),
+                    });
+                }
+                return listGenres;
+            }
+        }
+        public Users GetUserIdLogin(string mail, string password)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                Users user = new Users();
+                con.Open();
+                SqlCommand cmd = new("GetLogin", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@Mail", mail);
+                cmd.Parameters.AddWithValue("@Password", password);
+                cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    user.Id = reader.GetInt32("ID");
+                }
+                return user;
+            }
+        }
+        public Users CreateUser(string name, int age, string mail, string password)
+        {
+            Users user = new Users();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("CreateUser", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@Name", name);
+                cmd.Parameters.AddWithValue("@Age", age);
+                cmd.Parameters.AddWithValue("@Mail", mail);
+                cmd.Parameters.AddWithValue("@Password", password);
+                cmd.ExecuteNonQuery();
+                user.Name = name;
+                user.Age = age;
+                user.Email = mail;
+                user.Password = password;
+            }
+            return user;
+        }
+        public Movies CreateMovie(string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price, int genreId) 
+        { 
+            int seconds = ((hour * 60) + minutes) * 60;
+
+            Movies movie = new Movies();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("CreateMovie", con) { CommandType = CommandType.StoredProcedure };
+                SqlCommand cmd2 = new SqlCommand("CreateGenreConnection", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@Title", title);
+                cmd.Parameters.AddWithValue("@AgeRating", ageRating);
+                cmd.Parameters.AddWithValue("@TTW", seconds);
+                cmd.Parameters.AddWithValue("@ReleaseDate", releaseDate.ToShortDateString());
+                cmd.Parameters.AddWithValue("@Price", price);
+                cmd2.Parameters.AddWithValue("@Genre_ID", genreId);
+                cmd.ExecuteNonQuery();
+                cmd2.ExecuteNonQuery();
+                movie.Title = title;
+                movie.RequiredAge = ageRating;
+                movie.TTW = seconds;
+                movie.RelaseDate = releaseDate.ToShortDateString();
+                movie.Price = price;
+            }
+            return movie;
         }
     }
 }
