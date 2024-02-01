@@ -3,6 +3,7 @@ using Flockbuster.Domain.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Flockbuster.Domain
@@ -102,20 +103,29 @@ namespace Flockbuster.Domain
         }
         public Users GetUserByMail(string mail)
         {
-            Users user = new Users();
             using (SqlConnection con = new(connectionString))
             { 
                 con.Open();
                 SqlCommand cmd = new SqlCommand("GetUserByMail", con) { CommandType= CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@Mail", mail);
                 cmd.ExecuteNonQuery();
+
+                Users user = new Users();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
-                { 
-                    user.Id = reader.GetInt32("ID");
+                {
+                    user = (new Users
+                    {
+                        Id = reader.GetInt32("ID"),
+                        Name = reader.GetString("Name"),
+                        Age = reader.GetInt32("Age"),
+                        Email = reader.GetString("E-Mail"),
+                        Balance = reader.GetInt32("Balance"),
+                        IsAdmin = reader.GetBoolean("Admin")
+                    });
                 }
+                return user;
             }
-            return user;
         }
         public Genre GetGenreById(int id)
         {
@@ -339,6 +349,19 @@ namespace Flockbuster.Domain
                 movie.Price = price;
             }
             return movie;
+        }
+        public Users Admin(int id, bool admin)
+        {
+            Users users = new Users();
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("Admins", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@ID", id);
+                if (admin) { cmd.Parameters.AddWithValue("@Admin", 1); }
+                else { cmd.Parameters.AddWithValue("@Admin", 0); }
+            }
+            return users;
         }
         public void DeleteMovie(int id)
         {

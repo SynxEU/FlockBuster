@@ -68,7 +68,7 @@
                                asp-for="ConfirmPassword"
                                required>
                         <label for="confirmPasswordInput">Confirm password</label>
-                        <span asp-validation-for="ConfirmPassword"></span>
+                        <div asp-validation-summary="All" class="text-danger"></div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">
