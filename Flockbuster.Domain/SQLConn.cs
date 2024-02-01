@@ -243,8 +243,14 @@ namespace Flockbuster.Domain
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    user.Id = reader.GetInt32("ID");
-                    user.Name = reader.GetString("Name");
+                    user = (new Users { 
+                        Id = reader.GetInt32("Id"),
+                        Name = reader.GetString("Name"),
+                        Age = reader.GetInt32("Age"),
+                        Email = reader.GetString("E-Mail"),
+                        Balance = reader.GetInt32("Balance"),
+                        IsAdmin = reader.GetBoolean("Admin")
+                    });
                 }
                 return user;
             }
