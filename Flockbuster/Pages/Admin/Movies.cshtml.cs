@@ -5,8 +5,16 @@ namespace Flockbuster.Pages.Admin
 {
     public class MoviesModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (!HttpContext.Session.GetInt32("ID").HasValue || !HttpContext.Session.GetBoolean("Admin"))
+            {
+                return RedirectToPage("/errors/403");
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }

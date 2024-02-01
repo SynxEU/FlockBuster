@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Flockbuster.Service\Flockbuster.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\pics\" />
+  </ItemGroup>
+
 </Project>

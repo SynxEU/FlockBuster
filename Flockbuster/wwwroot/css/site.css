@@ -22,3 +22,7 @@ body {
   background-color: white;
   color: #3A3B3C;
 }
+
+a {
+    text-decoration:none;
+}

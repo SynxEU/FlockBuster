@@ -26,6 +26,8 @@ namespace Flockbuster
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

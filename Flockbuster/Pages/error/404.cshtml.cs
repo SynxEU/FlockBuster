@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Flockbuster.Pages.User
+namespace Flockbuster.Pages.error
 {
-    public class MoviesModel : PageModel
+    public class _404Model : PageModel
     {
         public void OnGet()
         {
