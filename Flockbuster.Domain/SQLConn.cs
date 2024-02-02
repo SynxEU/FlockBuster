@@ -42,7 +42,7 @@ namespace Flockbuster.Domain
             using (SqlConnection con = new(connectionString))
             {
                 con.Open();
-                SqlCommand cmd = new("GetAllMovies", con) { CommandType = CommandType.StoredProcedure };
+                SqlCommand cmd = new("GetAllUsers", con) { CommandType = CommandType.StoredProcedure };
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -52,7 +52,6 @@ namespace Flockbuster.Domain
                         Name = reader.GetString("Name"),
                         Age = reader.GetInt32("Age"),
                         Email = reader.GetString("E-Mail"),
-                        Password = reader.GetString("Password"),
                         Balance = reader.GetInt32("Balance"),
                         IsAdmin = reader.GetBoolean("Admin")
                     });
