@@ -5,8 +5,16 @@ namespace Flockbuster.Pages
 {
     public class SignoutModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (!HttpContext.Session.GetInt32("ID").HasValue)
+            {
+                return RedirectToPage("/errors/403");
+            }
+            else
+            {
+                return Page();
+            }
         }
         public IActionResult OnPostDontSignOut()
         {

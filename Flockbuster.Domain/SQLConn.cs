@@ -16,20 +16,20 @@ namespace Flockbuster.Domain
         public List<Movies> GetMovies()
         {
             List<Movies> listMovie = new List<Movies>();
-            using (SqlConnection con = new(connectionString)) 
-            { 
+            using (SqlConnection con = new(connectionString))
+            {
                 con.Open();
                 SqlCommand cmd = new("GetAllMovies", con) { CommandType = CommandType.StoredProcedure };
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
-                { 
+                {
                     listMovie.Add(new Movies
                     {
                         Id = reader.GetInt32("ID"),
                         Title = reader.GetString("Title"),
                         RequiredAge = reader.GetInt32("Age Rating"),
                         TTW = reader.GetInt32("TTW"),
-                        RelaseDate = reader.GetString("Release Date"),
+                        RelaseDate = Convert.ToString(reader.GetDateTime("Release Date").ToShortDateString()),
                         Price = reader.GetInt32("Price")
                     });
                 }
