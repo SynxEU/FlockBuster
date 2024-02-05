@@ -50,7 +50,7 @@ namespace Flockbuster.Pages.Admin.Edit
         {
             if (!HttpContext.Session.GetInt32("ID").HasValue || !HttpContext.Session.GetBoolean("Admin"))
             {
-                return RedirectToPage("/errors/403");
+                return RedirectToPage("/error/403");
             }
             else
             {

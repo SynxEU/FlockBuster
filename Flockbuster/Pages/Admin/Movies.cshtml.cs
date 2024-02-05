@@ -2,6 +2,7 @@ using Flockbuster.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Flockbuster.Domain.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Flockbuster.Service.Methods;
 
 namespace Flockbuster.Pages.Admin
 {
@@ -26,12 +27,26 @@ namespace Flockbuster.Pages.Admin
             }
             if (!HttpContext.Session.GetInt32("ID").HasValue || !HttpContext.Session.GetBoolean("Admin"))
             {
-                return RedirectToPage("/errors/403");
+                return RedirectToPage("/error/403");
             }
             else
             {
                 return Page();
             }
+        }
+        public IActionResult OnPostEdit(int movieId)
+        {
+            HttpContext.Session.SetInt32("TempMovieID", movieId);
+            return RedirectToPage("/Admin/Edit/Movie");
+        }
+        public IActionResult OnPostCreate()
+        {
+            return RedirectToPage("/Admin/Create/Movie");
+        }
+        public IActionResult OnPostDelete(int movieId)
+        {
+            _movie.DeleteMovie(movieId);
+            return RedirectToPage("/Admin/Movies");
         }
     }
 }

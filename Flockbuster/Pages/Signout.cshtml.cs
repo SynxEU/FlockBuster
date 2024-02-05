@@ -9,7 +9,7 @@ namespace Flockbuster.Pages
         {
             if (!HttpContext.Session.GetInt32("ID").HasValue)
             {
-                return RedirectToPage("/errors/403");
+                return RedirectToPage("/error/403");
             }
             else
             {

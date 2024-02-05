@@ -29,7 +29,7 @@ namespace Flockbuster.Domain
                         Title = reader.GetString("Title"),
                         RequiredAge = reader.GetInt32("Age Rating"),
                         TTW = reader.GetInt32("TTW"),
-                        RelaseDate = Convert.ToString(reader.GetDateTime("Release Date").ToShortDateString()),
+                        RelaseDate = reader.GetDateTime("Release Date").ToShortDateString(),
                         Price = reader.GetInt32("Price")
                     });
                 }

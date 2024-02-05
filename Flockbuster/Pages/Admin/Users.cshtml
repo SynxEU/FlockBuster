@@ -32,7 +32,7 @@
                         <form method="post">
                             <button class="btn btn-outline-primary me-2" type="submit" asp-page-handler="Edit" asp-route-userId="@user.Id"><i class="fa-solid fa-pen"></i></button>
                         </form>
-                        <button class="btn btn-outline-danger me-2" data-bs-toggle="modal" data-bs-target="#loanerDeleteModal-@user.Id"><i class="fa-solid fa-trash-can"></i></button>
+                        <button class="btn btn-outline-danger me-2" data-bs-toggle="modal" data-bs-target="#userDeleteModal-@user.Id"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                 </tr>
             }
@@ -42,11 +42,11 @@
 
 @foreach (Users user in Model.ListOfUsers)
 {
-    <div class="modal fade" id="loanerDeleteModal-@user.Id" tabindex="-1" aria-labelledby="loanerDeleteModal" aria-hidden="true">
+    <div class="modal fade" id="userDeleteModal-@user.Id" tabindex="-1" aria-labelledby="userDeleteModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-danger" id="loanerDeleteModal-@user.Id">Delete</h1>
+                    <h1 class="modal-title fs-5 text-danger" id="userDeleteModal-@user.Id">Delete</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -57,7 +57,7 @@
                         Email: @user.Email
                     </div>
                     <div class="mb-3">
-                        Number: @user.Age
+                        Age: @user.Age
                     </div>
                     <div class="mb-3">
                         Balance: @user.Balance

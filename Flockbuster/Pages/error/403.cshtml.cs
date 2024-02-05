@@ -8,5 +8,9 @@ namespace Flockbuster.Pages.error
         public void OnGet()
         {
         }
+        public void OnPost()
+        {
+            RedirectToPage("/index");
+        }
     }
 }
