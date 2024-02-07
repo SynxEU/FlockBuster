@@ -1,10 +1,11 @@
 ﻿@page
+@using Flockbuster.Domain.Models;
 @model Flockbuster.Pages.User.DashboardModel
 @{
     ViewData["Title"] = "Dashboard";
 }
 <div class="container d-flex justify-content-between">
-	<div class="card h-100 col-sm-3 shadow p-3 mb-5 bg-body-tertiary rounded">
+	@*<div class="card h-100 col-sm-3 shadow p-3 mb-5 bg-body-tertiary rounded">
 		<div class="card-body">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<h5 class="mb-2">Shortcuts</h5>
@@ -25,6 +26,9 @@
 				<a href="~/signout">Logout</a>
 			</div>
 		</div>
+	</div>*@
+	<div class="card h-25 col-sm-3 shadow p-2 mb-5 bg-body-tertiary rounded-circle">
+		<img class="rounded-circle" src="/pics/template.png" />
 	</div>
 	<div class="card h-100 w-50 shadow p-3 mb-5 bg-body-tertiary rounded">
 		<div class="card-body">
@@ -34,28 +38,28 @@
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<h6 class="mt-3">User number:</h6>
-					0
+					@Model.UserDetails.Id
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<h6 class="mt-3">Name:</h6>
-					0
+					@Model.UserDetails.Name
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<h6 class="mt-3">E-mail:</h6>
-					0
+					@Model.UserDetails.Email
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<h6 class="mt-3">Balance:</h6>
-					0
+					@Model.UserDetails.Balance
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-@*<div class="container">
+<div class="container">
 	<div class="card h-75 w-100 shadow p-3 mb-5 bg-body-tertiary rounded">
 		<div class="card-body">
-			@if (Model.ListOfBooks.Count != 0)
+			@if (Model.ListOfMovies.Count != 0)
 			{
 				<table class="table">
 					<thead>
@@ -67,17 +71,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Books book in Model.ListOfBooks)
+						@foreach (BorrowedMovie movie in Model.ListOfMovies)
 						{
 							<tr>
-								<td scope="row">@book.Title</td>
-								<td>@book.Author.Name</td>
-								<td class="dropdown">
+								<td scope="row">asd</td>
+								<td>asd</td>
+								<td>asd</td>
+								@*<td class="dropdown">
 									<a class="dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 										Genres
 									</a>
 									<ul class="dropdown-menu" data-bs-auto-close="false">
-										@foreach (Genre genre in book.Genres)
+										@foreach (Genre genre in movie.)
 										{
 											<li><a class="dropdown-item">@genre.GenreName</a></li>
 										}
@@ -87,7 +92,7 @@
 									<form method="post">
 										<button class="btn btn-outline-danger me-2" type="submit" asp-page-handler="Return" asp-route-bookId="@book.Id"><i class="fa-solid fa-arrow-right"></i></button>
 									</form>
-								</td>
+								</td>*@
 							</tr>
 						}
 					</tbody>
@@ -96,9 +101,9 @@
 			else
 			{
 				<div class="d-flex justify-content-center">
-					<h4>No books borrowed</h4>
+					<h4>No movies borrowed, check your <a href="~/User/MovieHistory">Movie History</a> for previous borrowed movies</h4>
 				</div>
 			}
 		</div>
 	</div>
-</div>*@
+</div>

@@ -16,5 +16,6 @@ namespace Flockbuster.Domain.Models
         public string Password { get; set; } = string.Empty;
         public int Balance { get; set; }
         public bool IsAdmin { get; set; }
+        //public string img { get; set; }
     }
 }
