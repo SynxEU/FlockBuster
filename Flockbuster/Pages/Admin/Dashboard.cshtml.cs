@@ -35,7 +35,7 @@ namespace Flockbuster.Pages.Admin
 			ListOfGenres = _movie.GetGenres();
 			if (!HttpContext.Session.GetBoolean("Admin"))
 			{
-				return RedirectToPage("/errors/403");
+				return RedirectToPage("/error/403");
 			}
 			else
 			{
