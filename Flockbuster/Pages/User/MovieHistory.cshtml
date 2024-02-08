@@ -1,5 +1,55 @@
 ﻿@page
+@using Flockbuster.Domain.Models;
 @model Flockbuster.Pages.User.MovieHistoryModel
 @{
     ViewData["Title"] = "Movie History";
+}
+
+@if (Model.ListOfMovies.Count() != 0)
+{
+    <div class="mt-2 container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Age Rating</th>
+                    <th scope="col">Time To Watch</th>
+                    <th scope="col">Release date</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Genres</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Movies mov in Model.ListOfMovies)
+                {
+                    <tr>
+                        <th scope="row">@mov.Id</th>
+                        <td>@mov.Title</td>
+                        <td>@mov.RequiredAge</td>
+                        <td>@(mov.TTW / 3600)h @((mov.TTW / 60) - (mov.TTW / 3600 * 60))m</td>
+                        <td>@mov.RelaseDate</td>
+                        <td>@mov.Price DKK</td>
+                        <td class="dropdown">
+                            <a class="dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Genres
+                            </a>
+                            <ul class="dropdown-menu" data-bs-auto-close="false">
+                                @foreach (Genre genre in mov.Genres)
+                                {
+                                    <li><a class="dropdown-item">@genre.GenreName</a></li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-center text-center postition-relative position-absolute top-50 start-50 translate-middle">
+        <h4>No movies was borrowed, borrow one from <a href="~/Movies">Movies</a></h4>
+    </div>
 }
