@@ -159,7 +159,7 @@ namespace Flockbuster.Domain
                     movie.Title = reader.GetString("Title");
                     movie.RequiredAge = reader.GetInt32("Age Rating");
                     movie.TTW = reader.GetInt32("TTW");
-                    movie.RelaseDate = reader.GetString("Release Date");
+                    movie.RelaseDate = reader.GetDateTime("Release Date").ToShortDateString();
                     movie.Price = reader.GetInt32("Price");
                 }
             }
