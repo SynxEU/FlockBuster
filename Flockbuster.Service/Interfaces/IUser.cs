@@ -18,5 +18,7 @@ namespace Flockbuster.Service.Interfaces
         Users UpdateUser(int id, string name, int age, string mail);
         Users UpdateUserPassword(int id, string password);
         Users Admin(int id, bool admin);
+        void UpdateUserPicture(int id, string filePath);
+        bool CheckPassowrd(int id, string password);
     }
 }

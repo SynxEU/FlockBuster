@@ -1,10 +1,7 @@
-﻿using Azure;
-using Flockbuster.Domain.Models;
+﻿using Flockbuster.Domain.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace Flockbuster.Domain
 {
@@ -63,14 +60,14 @@ namespace Flockbuster.Domain
         {
             List<BorrowedMovie> listBorrowedMovies = new List<BorrowedMovie>();
             using (SqlConnection con = new(connectionString))
-            { 
+            {
                 con.Open();
-                SqlCommand cmd = new("GetAllBorrowedMovies", con) { CommandType= CommandType.StoredProcedure };
+                SqlCommand cmd = new("GetAllBorrowedMovies", con) { CommandType = CommandType.StoredProcedure };
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     listBorrowedMovies.Add(new BorrowedMovie
-                    { 
+                    {
                         Id = reader.GetInt32("ID"),
                         MovieID = reader.GetInt32("Movie ID"),
                         UserID = reader.GetInt32("User ID"),
@@ -81,8 +78,8 @@ namespace Flockbuster.Domain
             }
             return listBorrowedMovies;
         }
-        public List<Genre> GetGenres() 
-        { 
+        public List<Genre> GetGenres()
+        {
             List<Genre> listGenres = new List<Genre>();
             using (SqlConnection con = new(connectionString))
             {
@@ -103,9 +100,9 @@ namespace Flockbuster.Domain
         public Users GetUserByMail(string mail)
         {
             using (SqlConnection con = new(connectionString))
-            { 
+            {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("GetUserByMail", con) { CommandType= CommandType.StoredProcedure };
+                SqlCommand cmd = new SqlCommand("GetUserByMail", con) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@Mail", mail);
                 cmd.ExecuteNonQuery();
 
@@ -173,7 +170,7 @@ namespace Flockbuster.Domain
                 con.Open();
                 SqlCommand cmd = new SqlCommand("GetUserById", con) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@UserId", id);
-                cmd.ExecuteNonQuery();
+                
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -183,6 +180,7 @@ namespace Flockbuster.Domain
                     user.Email = reader.GetString("E-Mail");
                     user.Balance = reader.GetInt32("Balance");
                     user.IsAdmin = reader.GetBoolean("Admin");
+                    user.Img = reader.GetString(reader.GetOrdinal("Img"));
                 }
             }
             return user;
@@ -242,7 +240,8 @@ namespace Flockbuster.Domain
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    user = (new Users { 
+                    user = (new Users
+                    {
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
                         Age = reader.GetInt32("Age"),
@@ -273,8 +272,8 @@ namespace Flockbuster.Domain
             }
             return user;
         }
-        public Movies CreateMovie(string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price, int genreId) 
-        { 
+        public Movies CreateMovie(string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price, int genreId)
+        {
             int seconds = ((hour * 60) + minutes) * 60;
 
             Movies movie = new Movies();
@@ -299,7 +298,7 @@ namespace Flockbuster.Domain
             }
             return movie;
         }
-        public Users UpdateUser(int id, string name, int age, string mail) 
+        public Users UpdateUser(int id, string name, int age, string mail)
         {
             Users user = new Users();
             using (SqlConnection con = new(connectionString))
@@ -317,7 +316,7 @@ namespace Flockbuster.Domain
             }
             return user;
         }
-        public Users UpdateUserPassword(int id, string password) 
+        public Users UpdateUserPassword(int id, string password)
         {
             Users user = new Users();
             using (SqlConnection con = new(connectionString))
@@ -386,6 +385,38 @@ namespace Flockbuster.Domain
                 SqlCommand cmd = new SqlCommand("DeleteUser", con) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@UserID", id);
                 cmd.ExecuteNonQuery();
+            }
+        }
+        public void UpdateUserPicture(int id, string filePath)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UploadUserPicture", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserID", id);
+                cmd.Parameters.AddWithValue("@Img", filePath);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public bool CheckPassowrd(int id, string password)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                bool verify = false;
+                string result;
+                con.Open();
+                SqlCommand cmd = new("VerifyUser", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserId", id);
+                cmd.Parameters.AddWithValue("@Password", password);
+                cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = reader["Result"].ToString();
+                    if (result == "Edit successful") { verify = true; }
+                    else { verify = false; }
+                }
+                return verify;
             }
         }
     }
