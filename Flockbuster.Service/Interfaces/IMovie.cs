@@ -19,5 +19,6 @@ namespace Flockbuster.Service.Interfaces
         Movies CreateMovie(string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price, int genreId);
         void DeleteMovie(int id);
         Movies UpdateMovie(int id, string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price);
+        void UpdateMoviePicture(int id, string filePath);
     }
 }

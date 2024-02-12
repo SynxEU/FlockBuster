@@ -24,7 +24,7 @@ namespace Flockbuster.Service.Methods
         public void DeleteUser(int id) => _connection?.DeleteUser(id);
         public Users UpdateUserPassword(int id, string password) => _connection.UpdateUserPassword(id, password);
         public Users UpdateUser(int id, string name, int age, string mail) => _connection.UpdateUser(id, name, age, mail);
-        public Users Admin(int id, bool admin) => _connection.Admin(id, admin);
+        public bool Admin(int id, bool admin) => _connection.Admin(id, admin);
         public void UpdateUserPicture(int id, string filePath) => _connection.UpdateUserPicture(id, filePath);
         public bool CheckPassowrd(int id, string password) => _connection.CheckPassowrd(id, password);
     }

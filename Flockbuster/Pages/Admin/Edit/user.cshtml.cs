@@ -76,14 +76,11 @@ namespace Flockbuster.Pages.Admin.Edit
             int? tempid = HttpContext.Session.GetInt32("TempUserId");
             int id = tempid.HasValue ? tempid.Value : 0;
             string fullName = FirstName + " " + LastName;
-            if (AdminPassword != "Admin1234!")
+            if (AdminPassword == "Admin1234!")
             {
-                ModelState.AddModelError("adminInput", "Wrong admin password");
-            }
-            if (ModelState.IsValid)
-            {
-                if (Password == ConfirmPassword) { _user.UpdateUserPassword(id, ConfirmPassword); }
-                _user.Admin(id, IsChecked);
+                if (!string.IsNullOrEmpty(Password) && Password == ConfirmPassword) { _user.UpdateUserPassword(id, ConfirmPassword); }
+                if (IsChecked) { _user.Admin(id, true); }
+                else { _user.Admin(id, false); }
                 _user.UpdateUser(id, fullName, Convert.ToInt32(Age), EmailAddress);
                 HttpContext.Session.Remove("TempUserId");
                 return RedirectToPage("/Admin/Users");

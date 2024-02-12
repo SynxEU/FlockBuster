@@ -354,18 +354,17 @@ namespace Flockbuster.Domain
             }
             return movie;
         }
-        public Users Admin(int id, bool admin)
+        public bool Admin(int id, bool admin)
         {
-            Users users = new Users();
             using (SqlConnection con = new(connectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("Admins", con) { CommandType = CommandType.StoredProcedure };
-                cmd.Parameters.AddWithValue("@ID", id);
-                if (admin) { cmd.Parameters.AddWithValue("@Admin", 1); }
-                else { cmd.Parameters.AddWithValue("@Admin", 0); }
+                cmd.Parameters.AddWithValue("@UserId", id);
+                cmd.Parameters.AddWithValue("@Admin", admin);
+                cmd.ExecuteNonQuery();
             }
-            return users;
+            return admin;
         }
         public void DeleteMovie(int id)
         {
@@ -394,6 +393,17 @@ namespace Flockbuster.Domain
                 con.Open();
                 SqlCommand cmd = new SqlCommand("UploadUserPicture", con) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@UserID", id);
+                cmd.Parameters.AddWithValue("@Img", filePath);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void UpdateMoviePicture(int id, string filePath)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UploadMoviePicture", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@MovieID", id);
                 cmd.Parameters.AddWithValue("@Img", filePath);
                 cmd.ExecuteNonQuery();
             }

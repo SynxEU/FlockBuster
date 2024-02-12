@@ -26,5 +26,6 @@ namespace Flockbuster.Service.Methods
         public Movies CreateMovie(string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price, int genreId) => _connection.CreateMovie(title, ageRating, hour, minutes, releaseDate, price, genreId);
         public void DeleteMovie(int id) => _connection?.DeleteMovie(id);
         public Movies UpdateMovie(int id, string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price) => _connection.UpdateMovie(id, title, ageRating, hour, minutes, releaseDate, price);
+        public void UpdateMoviePicture(int id, string filePath) => _connection?.UpdateMoviePicture(id, filePath);
     }
 }
