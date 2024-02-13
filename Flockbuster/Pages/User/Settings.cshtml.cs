@@ -99,7 +99,7 @@ namespace Flockbuster.Pages.User
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create)) { Img.CopyTo(fileStream); }
 
-                    string relativeFilePath = "/pics/" + uniqueFileName;
+                    string relativeFilePath = "/pics/users/" + uniqueFileName;
                     _user.UpdateUserPicture(id, relativeFilePath);
                 }
                 _user.UpdateUser(id, fullName, Convert.ToInt32(Age), EmailAddress);
