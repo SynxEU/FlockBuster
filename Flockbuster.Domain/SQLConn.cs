@@ -429,5 +429,24 @@ namespace Flockbuster.Domain
                 return verify;
             }
         }
+        public int GetMovieByTitle(string title)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                int id = 0;
+                con.Open();
+                SqlCommand cmd = new SqlCommand("GetMovieByTitle", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@Title", title);
+                cmd.ExecuteNonQuery();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    id = reader.GetInt32("ID");
+                }
+
+                return id;
+            }
+        }
     }
 }

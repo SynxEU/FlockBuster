@@ -94,12 +94,12 @@ namespace Flockbuster.Pages.User
                 }
                 if (Img != null && Img.Length > 0)
                 {
-                    string uniqueFileName = "id" + id + "_" + Img.FileName;
+                    string uniqueFileName = $"id{id}_{Img.FileName}";
                     string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pics", "Users", uniqueFileName);
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create)) { Img.CopyTo(fileStream); }
 
-                    string relativeFilePath = "/pics/users/" + uniqueFileName;
+                    string relativeFilePath = $"/pics/users/{uniqueFileName}";
                     _user.UpdateUserPicture(id, relativeFilePath);
                 }
                 _user.UpdateUser(id, fullName, Convert.ToInt32(Age), EmailAddress);

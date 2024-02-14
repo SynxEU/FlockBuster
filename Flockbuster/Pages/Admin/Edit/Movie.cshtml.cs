@@ -55,5 +55,14 @@ namespace Flockbuster.Pages.Admin.Edit
                 return Page();
             }
         }
+        public IActionResult OnPostCancel()
+        {
+            HttpContext.Session.Remove("TempMovieId");
+            return RedirectToPage("/Admin/Movies");
+        }
+        public IActionResult OnPostUpdate()
+        {
+            return Page();
+        }
     }
 }

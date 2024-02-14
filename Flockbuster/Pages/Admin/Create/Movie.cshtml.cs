@@ -60,21 +60,25 @@ namespace Flockbuster.Pages.Admin.Create
             }
         }
         public IActionResult OnPostCancel() => RedirectToPage("/Admin/Movies");
-        public IActionResult OnPostCreate() 
-        { 
-            int timeToWatch = (Convert.ToInt32(Hours) * 3600 ) + (Convert.ToInt32(Miuntes) * 60);
+        public IActionResult OnPostCreate()
+        {
+            if (AdminPassword != "Admin1234!" || ReleaseDate <= DateTime.MinValue || ReleaseDate >= DateTime.MaxValue || ReleaseDate <= DateTime.Now.Date || Title == null || Hours == 0 || Miuntes == 0 || Price == 0 || GenreId == 0) { return Page(); }
+
             _movie.CreateMovie(Title, AgeRating, Hours, Miuntes, ReleaseDate, Price, GenreId);
-            //if (Img != null && Img.Length > 0)
-            //{
-            //    string uniqueFileName = "id" + id + "_" + Img.FileName;
-            //    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pics", "Movies", uniqueFileName);
 
-            //    using (var fileStream = new FileStream(filePath, FileMode.Create)) { Img.CopyTo(fileStream); }
+            if (Img != null && Img.Length > 0)
+            {
+                int id = _movie.GetMovieByTitle(Title);
+                string uniqueFileName = $"id{id}_{Img.FileName}";
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pics", "Movies", uniqueFileName);
 
-            //    string relativeFilePath = "/pics/Movies/" + uniqueFileName;
-            //    _movie.UpdateMoviePicture(id, relativeFilePath);
-            //}
-            return Page();
+                using (var fileStream = new FileStream(filePath, FileMode.Create)) { Img.CopyTo(fileStream); }
+
+                string relativeFilePath = $"/pics/Movies/{uniqueFileName}";
+                _movie.UpdateMoviePicture(id, relativeFilePath);
+            }
+
+            return RedirectToPage("~/Admin/Movies");
         }
     }
 }
