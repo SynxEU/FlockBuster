@@ -1,5 +1,37 @@
 ﻿@page
+@using Flockbuster.Domain.Models;
 @model Flockbuster.Pages.Admin.MovieHistoryModel
 @{
     ViewData["Title"] = "Admin - Movie History";
 }
+
+<div class="mt-2 container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Name of user</th>
+                <th scope="col">Borrowed?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (BorrowedMovie borrowed in Model.BorrowedMovies)
+            {
+                <tr>
+                    <th scope="row">@borrowed.Id</th>
+                    @*<td>@Model.Movie</td>
+                    <td>@Model.User</td>*@
+                    @if (borrowed.IsBorrowed)
+                    {
+                        <td>Yes</td>
+                    }
+                    else
+                    {
+                        <td>Was borrowed</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

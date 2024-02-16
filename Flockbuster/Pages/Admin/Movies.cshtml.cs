@@ -15,8 +15,6 @@ namespace Flockbuster.Pages.Admin
         }
         [BindProperty]
         public List<Movies> ListOfMovies { get; set; } = new List<Movies>();
-        [BindProperty]
-        public List<Genre> ListOfGenres { get; set; } = new List<Genre>();
         public IActionResult OnGet()
         {
             ListOfMovies = _movie.GetMovies();
