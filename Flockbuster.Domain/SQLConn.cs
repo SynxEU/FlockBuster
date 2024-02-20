@@ -26,8 +26,9 @@ namespace Flockbuster.Domain
                         Title = reader.GetString("Title"),
                         RequiredAge = reader.GetInt32("Age Rating"),
                         TTW = reader.GetInt32("TTW"),
-                        RelaseDate = reader.GetDateTime("Release Date").ToShortDateString(),
-                        Price = reader.GetInt32("Price")
+                        RelaseDate = reader.GetDateTime("Release Date"),
+                        Price = reader.GetInt32("Price"),
+                        Img = reader.GetString("Img")
                     });
                 }
             }
@@ -156,7 +157,7 @@ namespace Flockbuster.Domain
                     movie.Title = reader.GetString("Title");
                     movie.RequiredAge = reader.GetInt32("Age Rating");
                     movie.TTW = reader.GetInt32("TTW");
-                    movie.RelaseDate = reader.GetDateTime("Release Date").ToShortDateString();
+                    movie.RelaseDate = reader.GetDateTime("Release Date");
                     movie.Price = reader.GetInt32("Price");
                 }
             }
@@ -293,7 +294,7 @@ namespace Flockbuster.Domain
                 movie.Title = title;
                 movie.RequiredAge = ageRating;
                 movie.TTW = seconds;
-                movie.RelaseDate = releaseDate.ToShortDateString();
+                movie.RelaseDate = releaseDate;
                 movie.Price = price;
             }
             return movie;
@@ -349,7 +350,7 @@ namespace Flockbuster.Domain
                 movie.Title = title;
                 movie.RequiredAge = ageRating;
                 movie.TTW = seconds;
-                movie.RelaseDate = releaseDate.ToShortDateString();
+                movie.RelaseDate = releaseDate;
                 movie.Price = price;
             }
             return movie;

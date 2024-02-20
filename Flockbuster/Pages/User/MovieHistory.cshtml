@@ -28,7 +28,7 @@
                         <td>@mov.Title</td>
                         <td>@mov.RequiredAge</td>
                         <td>@(mov.TTW / 3600)h @((mov.TTW / 60) - (mov.TTW / 3600 * 60))m</td>
-                        <td>@mov.RelaseDate</td>
+                        <td>@mov.RelaseDate.ToShortDateString()</td>
                         <td>@mov.Price DKK</td>
                         <td class="dropdown">
                             <a class="dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">

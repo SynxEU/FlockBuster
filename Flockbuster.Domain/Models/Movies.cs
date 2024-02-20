@@ -12,7 +12,7 @@ namespace Flockbuster.Domain.Models
         public string Title { get; set; } = string.Empty;
         public int RequiredAge { get; set; }
         public int TTW { get; set; }
-        public string RelaseDate { get; set; } = string.Empty;
+        public DateTime RelaseDate { get; set; }
         public int Price { get; set; }
         public string Img { get; set; }
         public List<Genre> Genres { get; set; }

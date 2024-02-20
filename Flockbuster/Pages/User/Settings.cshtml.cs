@@ -1,5 +1,6 @@
 using Flockbuster.Domain.Models;
 using Flockbuster.Service.Interfaces;
+using Flockbuster.Service.Methods;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -94,8 +95,13 @@ namespace Flockbuster.Pages.User
                 }
                 if (Img != null && Img.Length > 0)
                 {
-                    string uniqueFileName = $"id{id}_{Img.FileName}";
+                    string uniqueFileName = $"id{id}{Path.GetExtension(Img.FileName)}";
                     string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pics", "Users", uniqueFileName);
+
+                    if (User.Img == filePath)
+                    {
+                        Directory.Delete(filePath);
+                    }
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create)) { Img.CopyTo(fileStream); }
 

@@ -1,5 +1,56 @@
 ﻿@page
+@using Flockbuster.Domain.Models;
 @model Flockbuster.Pages.MoviesModel
 @{
     ViewData["Title"] = "Movies";
 }
+
+<div class="mt-2 container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Img</th>
+                <th scope="col">Title</th>
+                <th scope="col">Age Rating</th>
+                <th scope="col">Time To Watch</th>
+                <th scope="col">Release date</th>
+                <th scope="col">Price</th>
+                <th scope="col">Genres</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Movies mov in Model.ListOfMovies)
+            {
+                <tr>
+                    <th scope="row">@mov.Id</th>
+                    <td style="width:50px; height:50px;">
+                        <img src="@mov.Img" style="max-height:100%; max-width:100%" />
+                    </td>
+                    <td>@mov.Title</td>
+                    <td>@mov.RequiredAge</td>
+                    <td>@(mov.TTW / 3600)h @((mov.TTW / 60) - (mov.TTW / 3600 * 60))m</td>
+                    <td>@mov.RelaseDate.ToShortDateString()</td>
+                    <td>@mov.Price DKK</td>
+                    <td class="dropdown">
+                        <a class="dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Genres
+                        </a>
+                        <ul class="dropdown-menu" data-bs-auto-close="false">
+                            @foreach (Genre genre in mov.Genres)
+                            {
+                                <li><a class="dropdown-item">@genre.GenreName</a></li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="d-flex justify-content-end">
+                        <form method="post">
+                            <button class="btn btn-outline-warning me-2" type="submit" asp-page-handler="borrow" asp-route-movieId="@mov.Id"><i class="fa-solid fa-file-video"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

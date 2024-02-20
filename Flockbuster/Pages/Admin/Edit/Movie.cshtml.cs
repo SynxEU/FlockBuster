@@ -4,6 +4,7 @@ using Flockbuster.Service.Methods;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flockbuster.Pages.Admin.Edit
 {
@@ -22,21 +23,21 @@ namespace Flockbuster.Pages.Admin.Edit
         public string Title { get; set; } = string.Empty;
 
         [BindProperty]
-        public string AgeRating { get; set; } = string.Empty;
+        public int AgeRating { get; set; } 
 
         [BindProperty, DisplayName("Movie Picture")]
         public IFormFile Img { get; set; }
         [BindProperty]
-        public string Hours { get; set; } = string.Empty;
+        public int Hours { get; set; } 
 
         [BindProperty]
-        public string Miuntes { get; set; } = string.Empty;
+        public int Miuntes { get; set; } 
 
-        [BindProperty]
+        [BindProperty, DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
         [BindProperty]
-        public string Price { get; set; } = string.Empty;
+        public int Price { get; set; } 
 
         [BindProperty]
         public string AdminPassword { get; set; } = string.Empty;
@@ -48,9 +49,11 @@ namespace Flockbuster.Pages.Admin.Edit
             }
             else
             {
-                int? tempid = HttpContext.Session.GetInt32("TempMovieId");
+                int? tempid = HttpContext.Session.GetInt32("TempMovieID");
                 int id = tempid.HasValue ? tempid.Value : 0;
                 Movie = _movie.GetMoviesById(id);
+
+                ReleaseDate = Movie.RelaseDate;
 
                 return Page();
             }
@@ -62,7 +65,38 @@ namespace Flockbuster.Pages.Admin.Edit
         }
         public IActionResult OnPostUpdate()
         {
-            return Page();
+            if (AdminPassword == "Admin1234!")
+            {
+                int? tempid = HttpContext.Session.GetInt32("TempMovieID");
+                int id = tempid.HasValue ? tempid.Value : 0;
+
+                _movie.UpdateMovie(id, Title, AgeRating, Hours, Miuntes, ReleaseDate, Price);
+
+                if (Img != null && Img.Length > 0)
+                {
+                                        
+                    string uniqueFileName = $"id{id}{Path.GetExtension(Img.FileName)}";
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pics", "Movies", uniqueFileName);
+
+                    if (Movie.Img == filePath)
+                    {
+                        Directory.Delete(filePath);
+                    }
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create)) { Img.CopyTo(fileStream); }
+
+                    string relativeFilePath = $"/pics/Movies/{uniqueFileName}";
+                    _movie.UpdateMoviePicture(id, relativeFilePath);
+                }
+
+                HttpContext.Session.Remove("TempMovieID");
+                return RedirectToPage("/Admin/Movies");
+            }
+            else
+            {
+                HttpContext.Session.Remove("TempMovieID");
+                return RedirectToPage("/Admin/Movies");
+            }
         }
     }
 }

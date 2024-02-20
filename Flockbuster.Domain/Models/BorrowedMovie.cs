@@ -13,6 +13,8 @@ namespace Flockbuster.Domain.Models
         public int UserID { get; set; }
         public bool IsBorrowed { get; set; }
         public bool WasBorrowed { get; set; }
+        public string UserName { get; set; }
+        public string MovieName { get; set; }
         public List<Genre> BorrowedMoviesGenres { get; set;}
     }
 }

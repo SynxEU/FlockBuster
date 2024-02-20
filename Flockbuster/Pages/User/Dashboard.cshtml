@@ -5,28 +5,6 @@
     ViewData["Title"] = "Dashboard";
 }
 <div class="container d-flex justify-content-between">
-	@*<div class="card h-100 col-sm-3 shadow p-3 mb-5 bg-body-tertiary rounded">
-		<div class="card-body">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h5 class="mb-2">Shortcuts</h5>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<a href="~/index">Front page</a>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-			<a href="~/Movies">Movies </a>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<a href="~/User/MovieHistory">Movie history</a>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<a href="~/User/Settings">Settings</a>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<a href="~/signout">Logout</a>
-			</div>
-		</div>
-	</div>*@
 	<div class="card h-25 col-sm-3 shadow p-2 mb-5 bg-body-tertiary rounded-circle">
 		<img class="rounded-circle" src="@Model.UserDetails.Img" />
 	</div>
@@ -80,7 +58,7 @@
 								<td scope="row">@movie.Title</td>
 								<td>@movie.RequiredAge</td>
 								<td>@(movie.TTW / 3600)h @((movie.TTW / 60) - (movie.TTW / 3600 * 60))m</td>
-								<td>@movie.RelaseDate</td>
+								<td>@movie.RelaseDate.ToShortDateString()</td>
 								<td>@movie.Price DKK</td>
 								<td class="dropdown">
 									<a class="dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -17,10 +17,6 @@ namespace Flockbuster.Pages.Admin
         }
         [BindProperty]
         public List<BorrowedMovie> BorrowedMovies { get; set; } = new List<BorrowedMovie>();
-        [BindProperty]
-        public List<Users> User { get; set; } = new List<Users>();
-        [BindProperty]
-        public List<Movies> Movie { get; set; } = new List<Movies>();
         public IActionResult OnGet()
         {
             if (!HttpContext.Session.GetInt32("ID").HasValue || !HttpContext.Session.GetBoolean("Admin"))
@@ -33,20 +29,8 @@ namespace Flockbuster.Pages.Admin
 
                 foreach (BorrowedMovie borrowed in BorrowedMovies)
                 {
-                    User.Add(new Users
-                    {
-                        Name = _user.GetUsersById(borrowed.UserID).Name
-                    });
-                    Movie.Add(new Movies
-                    {
-                        Title = _movie.GetMoviesById(borrowed.MovieID).Title
-                    });
-                }
-
-                foreach (Movies mov in Movie)
-                {
-                    List<Genre> genreForMovies = _movie.GetMovieGenre(mov.Id);
-                    mov.Genres = genreForMovies;
+                    borrowed.MovieName = _movie.GetMoviesById(borrowed.MovieID).Title;
+                    borrowed.UserName = _user.GetUsersById(borrowed.UserID).Name;
                 }
 
                 return Page();

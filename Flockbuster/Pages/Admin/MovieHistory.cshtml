@@ -20,8 +20,8 @@
             {
                 <tr>
                     <th scope="row">@borrowed.Id</th>
-                    @*<td>@Model.Movie</td>
-                    <td>@Model.User</td>*@
+                    <td>@borrowed.MovieName</td>
+                    <td>@borrowed.UserName</td>
                     @if (borrowed.IsBorrowed)
                     {
                         <td>Yes</td>

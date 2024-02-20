@@ -69,7 +69,7 @@ namespace Flockbuster.Pages.Admin.Create
             if (Img != null && Img.Length > 0)
             {
                 int id = _movie.GetMovieByTitle(Title);
-                string uniqueFileName = $"id{id}_{Img.FileName}";
+                string uniqueFileName = $"id{id}{Path.GetExtension(Img.FileName)}";
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pics", "Movies", uniqueFileName);
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create)) { Img.CopyTo(fileStream); }
