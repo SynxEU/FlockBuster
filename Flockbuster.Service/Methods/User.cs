@@ -27,5 +27,7 @@ namespace Flockbuster.Service.Methods
         public bool Admin(int id, bool admin) => _connection.Admin(id, admin);
         public void UpdateUserPicture(int id, string filePath) => _connection.UpdateUserPicture(id, filePath);
         public bool CheckPassowrd(int id, string password) => _connection.CheckPassowrd(id, password);
+        public void UpdateUserBalancePlus(int id, int balance) => _connection.UpdateUserBalancePlus(id, balance);
+        public void UpdateUserBalanceMinus(int id, int balance) => _connection.UpdateUserBalanceMinus(id, balance);
     }
 }

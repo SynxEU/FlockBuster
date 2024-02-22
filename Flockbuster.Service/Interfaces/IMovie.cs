@@ -21,5 +21,7 @@ namespace Flockbuster.Service.Interfaces
         Movies UpdateMovie(int id, string title, int ageRating, int hour, int minutes, DateTime releaseDate, int price);
         void UpdateMoviePicture(int id, string filePath);
         int GetMovieByTitle(string title);
+        void BorrowMovie(int movieId, int userId);
+        void ReturnMovie(int movieId, int userId);
     }
 }

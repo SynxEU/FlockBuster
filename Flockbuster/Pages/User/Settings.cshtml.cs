@@ -71,10 +71,7 @@ namespace Flockbuster.Pages.User
             }
         }
 
-        public IActionResult OnPostCancel()
-        {
-            return RedirectToPage("/User/Dashboard");
-        }
+        public IActionResult OnPostCancel() => RedirectToPage("/User/Dashboard");
         public IActionResult OnPostUpdate()
         {
             int? tempId = HttpContext.Session.GetInt32("ID");

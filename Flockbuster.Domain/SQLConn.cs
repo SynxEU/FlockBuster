@@ -449,5 +449,49 @@ namespace Flockbuster.Domain
                 return id;
             }
         }
+        public void BorrowMovie(int movieId, int userId)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("BorrowMovie",con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@MovieID", movieId);
+                cmd.Parameters.AddWithValue("@UserID", userId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void ReturnMovie(int movieId, int userId)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("ReturnMovie", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@MovieID", movieId);
+                cmd.Parameters.AddWithValue("@UserID", userId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void UpdateUserBalancePlus(int id, int balance)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UpdateUserBalancePlus", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserID", id);
+                cmd.Parameters.AddWithValue("@Balance", balance);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void UpdateUserBalanceMinus(int id, int balance)
+        {
+            using (SqlConnection con = new(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UpdateUserBalanceMinus", con) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@UserID", id);
+                cmd.Parameters.AddWithValue("@Balance", balance);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

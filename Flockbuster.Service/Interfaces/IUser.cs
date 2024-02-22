@@ -20,5 +20,7 @@ namespace Flockbuster.Service.Interfaces
         bool Admin(int id, bool admin);
         void UpdateUserPicture(int id, string filePath);
         bool CheckPassowrd(int id, string password);
+        void UpdateUserBalancePlus(int id, int balance);
+        void UpdateUserBalanceMinus(int id, int balance);
     }
 }

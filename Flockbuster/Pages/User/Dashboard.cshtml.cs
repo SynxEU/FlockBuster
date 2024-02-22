@@ -52,5 +52,12 @@ namespace Flockbuster.Pages.User
 				return Page();
 			}
 		}
+		public IActionResult OnPostReturn(int movieId)
+		{
+            int? tempId = HttpContext.Session.GetInt32("ID");
+            int id = tempId.HasValue ? tempId.Value : 0;
+            _movie.ReturnMovie(movieId, id);
+			return RedirectToPage("/User/Dashboard");
+		}
 	}
 }
