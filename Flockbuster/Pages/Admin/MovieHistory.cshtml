@@ -12,6 +12,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Name of user</th>
+                <th scope="col">Return Date</th>
                 <th scope="col">Borrowed?</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                     <th scope="row">@borrowed.Id</th>
                     <td>@borrowed.MovieName</td>
                     <td>@borrowed.UserName</td>
+                    <td>@borrowed.ReturnDate.ToShortDateString()</td>
                     @if (borrowed.IsBorrowed)
                     {
                         <td>Yes</td>

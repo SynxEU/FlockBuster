@@ -47,6 +47,7 @@
 							<th scope="col">Time to watch</th>
 							<th scope="col">Release date</th>
 							<th scope="col">Price</th>
+							<th scope="col">Return date</th>
 							<th scope="col">Genre</th>
 							<th></th>
 						</tr>
@@ -60,6 +61,7 @@
 								<td>@(movie.TTW / 3600)h @((movie.TTW / 60) - (movie.TTW / 3600 * 60))m</td>
 								<td>@movie.RelaseDate.ToShortDateString()</td>
 								<td>@movie.Price DKK</td>
+								<td>@movie.ReturnDate.ToShortDateString()</td>
 								<td class="dropdown">
 									<a class="dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 										Genres

@@ -38,6 +38,7 @@ namespace Flockbuster.Pages.User
 
 				Movies borrowedMovie = new Movies();
 				borrowedMovie = _movie.GetMoviesById(loanedMovie.MovieID);
+				borrowedMovie.ReturnDate = loanedMovie.ReturnDate;
 
 				if (loanedMovie.Id != 0 && loanedMovie.IsBorrowed)
 				{

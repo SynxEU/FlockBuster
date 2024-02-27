@@ -16,5 +16,6 @@ namespace Flockbuster.Domain.Models
         public string UserName { get; set; }
         public string MovieName { get; set; }
         public List<Genre> BorrowedMoviesGenres { get; set;}
+        public DateTime ReturnDate { get; set; }
     }
 }

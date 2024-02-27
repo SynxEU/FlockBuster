@@ -73,7 +73,8 @@ namespace Flockbuster.Domain
                         MovieID = reader.GetInt32("Movie ID"),
                         UserID = reader.GetInt32("User ID"),
                         IsBorrowed = reader.GetBoolean("IsBorrowed"),
-                        WasBorrowed = reader.GetBoolean("WasBorrowed")
+                        WasBorrowed = reader.GetBoolean("WasBorrowed"),
+                        ReturnDate = reader.GetDateTime("Return Date")
                     });
                 }
             }
@@ -203,6 +204,7 @@ namespace Flockbuster.Domain
                     borrowedMovie.MovieID = reader.GetInt32("Movie ID");
                     borrowedMovie.IsBorrowed = reader.GetBoolean("IsBorrowed");
                     borrowedMovie.WasBorrowed = reader.GetBoolean("WasBorrowed");
+                    borrowedMovie.ReturnDate = reader.GetDateTime("Return Date");
                 }
             }
             return borrowedMovie;
@@ -457,6 +459,7 @@ namespace Flockbuster.Domain
                 SqlCommand cmd = new SqlCommand("BorrowMovie",con) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@MovieID", movieId);
                 cmd.Parameters.AddWithValue("@UserID", userId);
+                cmd.Parameters.AddWithValue("@ReturnDate", DateTime.Now.AddMonths(1));
                 cmd.ExecuteNonQuery();
             }
         }

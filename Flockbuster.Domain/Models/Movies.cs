@@ -16,5 +16,6 @@ namespace Flockbuster.Domain.Models
         public int Price { get; set; }
         public string Img { get; set; }
         public List<Genre> Genres { get; set; }
+        public DateTime ReturnDate { get; set; }
     }
 }
