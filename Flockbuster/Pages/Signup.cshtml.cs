@@ -40,7 +40,7 @@ namespace Flockbuster.Pages
         {
             string fullName = FirstName + " " + LastName;
 
-            if (!string.IsNullOrWhiteSpace(fullName))
+            if (!string.IsNullOrWhiteSpace(EmailAddress))
             {
                 _user.CreateUser(fullName, Convert.ToInt32(Age), EmailAddress, ConfirmPassword);
                 Users user = new Users();

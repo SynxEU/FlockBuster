@@ -13,6 +13,7 @@
 			<div class="row gutters">
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 					<h5 class="mb-4">User Details</h5>
+
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<h6 class="mt-3">User number:</h6>
@@ -28,7 +29,8 @@
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<h6 class="mt-3">Balance:</h6>
-					@Model.UserDetails.Balance DKK
+					@Model.UserDetails.Balance DKK 
+					<button class="btn btn-outline-success ms-2" data-bs-toggle="modal" data-bs-target="#userAddBalance"><i class="fa-solid fa-wallet"></i></button>
 				</div>
 			</div>
 		</div>
@@ -90,5 +92,26 @@
 				</div>
 			}
 		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="userAddBalance" tabindex="-1" aria-labelledby="userAddBalance" aria-hidden="true">
+	<div class="modal-dialog">
+		<form method="post">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5 text-success" id="userAddBalance">Add balance</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<label for="AddToBalance">Add to Balance</label>
+					<input type="number" id="AddToBalance" class="form-control" asp-for="AddToBalance">
+			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+					<button type="submit" class="btn btn-success" data-bs-dismiss="modal" asp-page-handler="AddBalance">Yes</button>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>

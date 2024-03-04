@@ -1,8 +1,33 @@
 ﻿@page
+@using Flockbuster.Domain.Models;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+<div class="container d-inline-flex">
+    @foreach (Movies mov in Model.ListOfMovies)
+    {
+        <img src="@mov.Img" class="ms-2 mh-18" data-bs-toggle="modal" data-bs-target="#movBorrowModal-@mov.Id" />
+    }
+</div>
 
 
-
+@foreach (Movies mov in Model.ListOfMovies)
+{
+    <div class="modal fade" id="movBorrowModal-@mov.Id" tabindex="-1" aria-labelledby="movBorrowModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="d-flex justify-content-center">
+                <img src="@mov.Img" />
+            </div>
+            <div class="container text-center mt-4">
+                <h6 class="text-white">
+                    @mov.Title
+                </h6>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-danger mt-4 me-2" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-outline-warning mt-4 ms-2" type="submit" data-bs-dismiss="modal" asp-page-handler="Borrow" asp-route-movieId="@mov.Id">Borrow for @mov.Price DKK</button>
+            </div>
+        </div>
+    </div>
+}

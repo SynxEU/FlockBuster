@@ -23,7 +23,8 @@ namespace Flockbuster.Pages
         }
         public IActionResult OnPostContact()
         {
-            return Page();
+            Console.WriteLine($"Fullname: {FullName}\nEmail: {Email}\nSubject: {Subject}\n\n{Textarea}");
+            return RedirectToPage("/Contact");
         }
     }
 }
