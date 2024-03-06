@@ -346,7 +346,7 @@ namespace Flockbuster.Domain
                 cmd.Parameters.AddWithValue("@Title", title);
                 cmd.Parameters.AddWithValue("@AgeRating", ageRating);
                 cmd.Parameters.AddWithValue("@TTW", seconds);
-                cmd.Parameters.AddWithValue("@ReleaseDate", releaseDate.ToShortDateString());
+                cmd.Parameters.AddWithValue("@ReleaseDate", releaseDate);
                 cmd.Parameters.AddWithValue("@Price", price);
                 cmd.ExecuteNonQuery();
                 movie.Title = title;

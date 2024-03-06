@@ -10,7 +10,7 @@
             <h1 class="h3 mb-2 fw-normal">Sign in</h1>
             <form method="post"
                   id="SignInPage">
-                <div class="form-floating">
+                <div class="form-floating my-2">
                     <input type="email"
                            class="form-control"
                            id="eMailInput"
@@ -18,13 +18,12 @@
                            asp-for="Mail">
                     <label for="eMailInput">Email address</label>
                 </div>
-                <div class="form-floating mb-2">
+                <div class="form-floating my-2">
                     <input type="password"
                            class="form-control"
                            id="passwordInput"
                            placeholder="password"
                            asp-for="Password">
-
                     <label for="passwordInput">Password</label>
                 </div>
                 <div asp-validation-summary="All" class="text-danger"></div>
