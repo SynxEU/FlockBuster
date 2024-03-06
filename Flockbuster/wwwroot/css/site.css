@@ -99,3 +99,21 @@ a {
         opacity: 0;
     }
 }
+
+div.scrollmenu {
+    background-color: transparent;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+    div.scrollmenu img {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px;
+        text-decoration: none;
+    }
+
+        div.scrollmenu img:hover {
+            background-color: #f0f0f0
+        }

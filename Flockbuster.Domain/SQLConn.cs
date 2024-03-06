@@ -288,7 +288,7 @@ namespace Flockbuster.Domain
                 cmd.Parameters.AddWithValue("@Title", title);
                 cmd.Parameters.AddWithValue("@AgeRating", ageRating);
                 cmd.Parameters.AddWithValue("@TTW", seconds);
-                cmd.Parameters.AddWithValue("@ReleaseDate", releaseDate.ToShortDateString());
+                cmd.Parameters.AddWithValue("@ReleaseDate", releaseDate);
                 cmd.Parameters.AddWithValue("@Price", price);
                 cmd2.Parameters.AddWithValue("@Genre_ID", genreId);
                 cmd.ExecuteNonQuery();
