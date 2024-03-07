@@ -21,7 +21,16 @@ namespace Flockbuster.Pages
 
 		[BindProperty]
 		public List<Movies> ListOfMovies { get; set; } = new List<Movies>();
-		public void OnGet() => ListOfMovies = _movie.GetMovies();
+        [BindProperty]
+        public List<Movies> ThreeNewestMovies { get; set; } = new List<Movies>();
+        public void OnGet()
+        {
+            List<Movies> templist = new List<Movies>();
+            ListOfMovies = _movie.GetMovies();
+            templist = ListOfMovies.ToList();
+            templist.Reverse();
+            ThreeNewestMovies = templist.Take(3).ToList();
+        }
         public IActionResult OnPostBorrow(int movieId)
         {
             int? tempid = HttpContext.Session.GetInt32("ID");

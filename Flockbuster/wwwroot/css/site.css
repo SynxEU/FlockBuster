@@ -103,6 +103,7 @@ a {
 div.scrollmenu {
     background-color: transparent;
     overflow: auto;
+    height: 300px;
     white-space: nowrap;
 }
 
@@ -112,10 +113,10 @@ div.scrollmenu {
         text-align: center;
         padding: 14px;
         text-decoration: none;
-        height: 268px;
-        width: 188px;
+        height: 270px;
+        width: 190px;
     }
 
         div.scrollmenu img:hover {
-            background-color: #f0f0f0
+            transform: scale(1.03);
         }

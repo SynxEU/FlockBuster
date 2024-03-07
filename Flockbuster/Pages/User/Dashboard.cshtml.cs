@@ -22,7 +22,7 @@ namespace Flockbuster.Pages.User
 		[BindProperty]
 		public List<Movies> ListOfMovies { get; set; } = new List<Movies>();
 		[BindProperty]
-		public int AddToBalance { get; set; }
+		public int Balance { get; set; }
 		public IActionResult OnGet()
 		{
 			if (!HttpContext.Session.GetInt32("ID").HasValue || HttpContext.Session.GetBoolean("Admin"))
@@ -66,14 +66,28 @@ namespace Flockbuster.Pages.User
 		{
 			int? tempId = HttpContext.Session.GetInt32("ID");
 			int id = tempId.HasValue ? tempId.Value : 0;
-			if (AddToBalance > 0) 
+			if (Balance > 0) 
 			{
-				_user.UpdateUserBalancePlus(id, AddToBalance);
+				_user.UpdateUserBalancePlus(id, Balance);
 			}
 			else
 			{
-                Console.WriteLine(AddToBalance);
+                Console.WriteLine(Balance);
             }
+			return RedirectToPage("/User/Dashboard");
+		}
+		public IActionResult OnPostWithdrawBalance()
+		{
+			int? tempId = HttpContext.Session.GetInt32("ID");
+			int id = tempId.HasValue ? tempId.Value : 0;
+			if (Balance > 0)
+			{
+				_user.UpdateUserBalanceMinus(id, Balance);
+			}
+			else
+			{
+				Console.WriteLine(Balance);
+			}
 			return RedirectToPage("/User/Dashboard");
 		}
 	}
