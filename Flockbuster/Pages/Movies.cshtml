@@ -5,61 +5,45 @@
     ViewData["Title"] = "Movies";
 }
 
-<div class="mt-2 container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Img</th>
-                <th scope="col">Title</th>
-                <th scope="col">Age Rating</th>
-                <th scope="col">Time To Watch</th>
-                <th scope="col">Release date</th>
-                <th scope="col">Price</th>
-                <th scope="col">Genres</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Movies mov in Model.ListOfMovies)
-            {
-                <tr>
-                    <th scope="row">@mov.Id</th>
-                    <td style="width:50px; height:50px;">
-                        <img src="@mov.Img" style="max-height:100%; max-width:100%" />
-                    </td>
-                    <td>@mov.Title</td>
-                    <td>@mov.RequiredAge</td>
-                    <td>@(mov.TTW / 3600)h @((mov.TTW / 60) - (mov.TTW / 3600 * 60))m</td>
-                    <td>@mov.RelaseDate.ToShortDateString()</td>
-                    <td>@mov.Price DKK</td>
-                    <td class="dropdown">
-                        <a class="dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Genres
-                        </a>
-                        <ul class="dropdown-menu" data-bs-auto-close="false">
-                            @foreach (Genre genre in mov.Genres)
-                            {
-                                <li><a class="dropdown-item">@genre.GenreName</a></li>
-                            }
-                        </ul>
-                    </td>
-                    <td class="d-flex justify-content-end">
-                        @if (HttpContext.Session.GetInt32("ID") > 1)
-                        {
-                            <form method="post">
-                                <button class="btn btn-outline-warning me-2" type="submit" asp-page-handler="Borrow" asp-route-movieId="@mov.Id"><i class="fa-solid fa-file-video"></i></button>
-                            </form>
-                        }
-                        else
-                        {
-                            <form method="post">
-                                <button class="btn btn-outline-warning me-2" disabled><i class="fa-solid fa-file-video"></i></button>
-                            </form>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div id="movies" class="my-4">
+    @foreach (Movies mov in Model.ListOfMovies)
+    {
+        <img src="@mov.Img" class="ms-2" data-bs-toggle="modal" data-bs-target="#movBorrowModal-@mov.Id" />
+    }
 </div>
+
+
+@foreach (Movies mov in Model.ListOfMovies)
+{
+    <div class="modal fade" id="movBorrowModal-@mov.Id" tabindex="-1" aria-labelledby="movBorrowModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-transparent border-0">
+                <div class="d-flex justify-content-center">
+                    <img src="@mov.Img" style="height:420px;width:280px;" />
+                </div>
+                <div class="text-center text-white mt-4">
+                    <h6>
+                        @mov.Title
+                    </h6>
+                    <p>
+                        Required age: @mov.RequiredAge<br />
+                        Release date: @mov.RelaseDate.ToShortDateString()
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-danger mt-4 me-2" data-bs-dismiss="modal">Cancel</button>
+                    @if (HttpContext.Session.GetInt32("ID") > 1)
+                    {
+                        <form method="post">
+                            <button class="btn btn-warning mt-4 ms-2" type="submit" data-bs-dismiss="modal" asp-page-handler="Borrow" asp-route-movieId="@mov.Id">Borrow for @mov.Price DKK</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-warning mt-4 ms-2" data-bs-dismiss="modal" disabled>Disabled</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

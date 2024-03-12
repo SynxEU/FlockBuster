@@ -31,6 +31,7 @@
 					<h6 class="mt-3">Balance:</h6>
 					@Model.UserDetails.Balance DKK 
 					<button class="btn btn-outline-success ms-2" data-bs-toggle="modal" data-bs-target="#userBalance"><i class="fa-solid fa-wallet"></i></button>
+					<a onclick="PopToast('Test design')">Design</a>
 				</div>
 			</div>
 		</div>
@@ -108,8 +109,8 @@
 				<input type="number" id="Balance" class="form-control" asp-for="Balance">
 			</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-success w-25" data-bs-dismiss="modal" asp-page-handler="WithdrawBalance">Withdraw Balance</button>
-					<button type="submit" class="btn btn-success w-25" data-bs-dismiss="modal" asp-page-handler="AddBalance">Insert Balance</button>
+					<button type="submit" class="btn btn-success w-25" data-bs-dismiss="modal" asp-page-handler="WithdrawBalance" onclick="PopToast('@Model.Balance has been withdrawn')">Withdraw Balance</button>
+					<button type="submit" class="btn btn-success w-25" data-bs-dismiss="modal" asp-page-handler="AddBalance" onclick="PopToast('@Model.Balance has been added')">Insert Balance</button>
 				</div>
 			</div>
 		</form>

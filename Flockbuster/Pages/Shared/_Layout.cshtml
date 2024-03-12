@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/Flockbuster.styles.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+        <script src="~/js/Toasts.js"></script>
 
     </head>
     <body>
@@ -71,15 +72,17 @@
             </nav>
         </header>
         <div class="container">
-            <main role="main" class="pb-3">
-            <div id="snackbar"></div>
-            <div>
-                <p></p>
-                <h1>
-                    <span></span>
-                </h1>
-            </div>
+            <main role="main">
                 @RenderBody()
+            <div class="pb-3">
+                <div id="snackbar"></div>
+                <div>
+                    <p></p>
+                    <h1>
+                        <span></span>
+                    </h1>
+                </div>
+            </div>
             </main>
         </div>
 
@@ -92,7 +95,6 @@
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/js/Toasts.js" asp-append-version="true"></script>
 
         @await RenderSectionAsync("Scripts", required: false)
     </body>

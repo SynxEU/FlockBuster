@@ -7,6 +7,7 @@
 
 <div id="carousel" class="carousel slide carousel-fade mb-3">
     <div class="carousel-inner">
+        
         <div class="carousel-item active">
             <img src="/pics/placeholder.png" class="d-block w-100">
         </div>
@@ -16,6 +17,16 @@
         <div class="carousel-item">
             <img src="/pics/placeholder.png" class="d-block w-100">
         </div>
+
+        @*@foreach (Movies mov in Model.ThreeNewestMovies)
+        {
+            <div class="carousel-item active">
+                <img src="@mov.Img" class="d-block w-100">
+            </div>
+        }
+        Look into later
+        *@  
+
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -27,7 +38,7 @@
     </button>
 </div>
 
-<div class="scrollmenu my-4">
+<div class="scrollmenu my-4 border-top">
     @foreach (Movies mov in Model.ListOfMovies)
     {
         <img src="@mov.Img" class="ms-2 mh-18" data-bs-toggle="modal" data-bs-target="#movBorrowModal-@mov.Id" />

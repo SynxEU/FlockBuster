@@ -29,18 +29,17 @@ namespace Flockbuster.Pages
             user = _user.GetUserDetailsLogin(user.Email, Password);
             if (string.IsNullOrEmpty(user.Name))
             {
-				ModelState.AddModelError("asp", "Wrong password or email");
-				return Page();
-			}
-            else
+                ModelState.AddModelError("asp", "Wrong password or email");
+            }
+            if (ModelState.IsValid)
             {
-                
-				HttpContext.Session.Boolean("Admin", user.IsAdmin);
-				HttpContext.Session.SetString("Name", user.Name);
-				HttpContext.Session.SetInt32("ID", user.Id);
-				if (user.IsAdmin == true) { return RedirectToPage("/Admin/Dashboard"); }
-				else { return RedirectToPage("/user/dashboard"); }
-			}
+                HttpContext.Session.Boolean("Admin", user.IsAdmin);
+                HttpContext.Session.SetString("Name", user.Name);
+                HttpContext.Session.SetInt32("ID", user.Id);
+                if (user.IsAdmin == true) { return RedirectToPage("/Admin/Dashboard"); }
+                else { return RedirectToPage("/user/dashboard"); }
+            }
+            else { return Page(); }
         }
     }
 }

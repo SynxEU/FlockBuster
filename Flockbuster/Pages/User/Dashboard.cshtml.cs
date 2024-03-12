@@ -80,7 +80,7 @@ namespace Flockbuster.Pages.User
 		{
 			int? tempId = HttpContext.Session.GetInt32("ID");
 			int id = tempId.HasValue ? tempId.Value : 0;
-			if (Balance > 0)
+			if (Balance > 0 && Balance <= _user.GetUsersById(id).Balance)
 			{
 				_user.UpdateUserBalanceMinus(id, Balance);
 			}
