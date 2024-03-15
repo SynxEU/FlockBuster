@@ -26,20 +26,10 @@
                            asp-for="Password">
                     <label for="passwordInput">Password</label>
                 </div>
-                @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <button type="submit" class="btn btn-primary btn-group" onclick="PopToast('Wrong email or password')">
                     Sign in
                 </button>
-                @*@if (Model.ModelState.IsValid)
-                {
-
-                }
-                else
-                {
-                    <script>
-                        PopToast('Wrong email or password')
-                    </script>
-                }*@
             </form>
             <p>Not a user yet? Sign up by clicking <a href="/signup">here</a></p>
         </div>

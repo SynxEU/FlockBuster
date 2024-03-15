@@ -43,12 +43,12 @@ namespace Flockbuster.Pages
             {
                 _movie.BorrowMovie(movieId, id);
                 _user.UpdateUserBalanceMinus(id, price);
-                return RedirectToPage("/User/Dashboard");
+                return RedirectToPage("/user/dashboard");
             }
             else
             {
                 ModelState.AddModelError("Funds", "No funds");
-                return RedirectToPage("/Movies");
+                return RedirectToPage("/user/dashboard");
             }
         }
     }

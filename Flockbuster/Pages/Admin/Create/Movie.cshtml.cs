@@ -62,7 +62,7 @@ namespace Flockbuster.Pages.Admin.Create
         public IActionResult OnPostCancel() => RedirectToPage("/Admin/Movies");
         public IActionResult OnPostCreate()
         {
-            //if (AdminPassword != "Admin1234!" || ReleaseDate >= DateTime.MinValue || ReleaseDate <= DateTime.MaxValue || ReleaseDate >= DateTime.Now.Date || Title == null || Hours == 0 || Miuntes == 0 || Price == 0 || GenreId == 0) { return Page(); }
+            if (AdminPassword != "Admin1234!" || ReleaseDate <= DateTime.MinValue || ReleaseDate >= DateTime.MaxValue || ReleaseDate >= DateTime.Now.Date || Title == null || Hours == 0 || Price < 0 || GenreId == 0) { return RedirectToPage("/Admin/Create/Movie"); }
 
             _movie.CreateMovie(Title, AgeRating, Hours, Miuntes, ReleaseDate, Price, GenreId);
 

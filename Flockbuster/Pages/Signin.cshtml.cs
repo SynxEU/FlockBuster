@@ -26,11 +26,12 @@ namespace Flockbuster.Pages
         {
             Users user = new Users();
             user.Email = Mail;
-            user = _user.GetUserDetailsLogin(user.Email, Password);
-            if (string.IsNullOrEmpty(user.Name))
-            {
-                ModelState.AddModelError("asp", "Wrong password or email");
-            }
+
+            if (string.IsNullOrWhiteSpace(Password)) { ModelState.AddModelError("asp", "Wrong password"); }
+            else { user = _user.GetUserDetailsLogin(user.Email, Password); }
+
+            if (string.IsNullOrEmpty(user.Name)) { ModelState.AddModelError("asp", "Wrong password or email"); }
+
             if (ModelState.IsValid)
             {
                 HttpContext.Session.Boolean("Admin", user.IsAdmin);
